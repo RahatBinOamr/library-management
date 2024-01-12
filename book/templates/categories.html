@@ -1,0 +1,30 @@
+{% block content %}
+<div style="background-color: #fff" class="shadow-sm p-3 mt-4 rounded">
+  <div class="d-flex justify-content-between">
+    <h3>Genre</h3>
+    <a href="{% url 'all_category'  %}">Show more</a>
+  </div>
+
+  
+  <div class="row row-cols-2 row-cols-md-6  g-2 mt-3">
+    {% for category in categories %}
+    <div class="col">
+      <div class="card h-100">
+        <a href="{% url 'category' category.name %}">
+        <img
+          src="{{category.image.url}}"
+          style="height: 100px; width: 100%"
+          class="card-img-top"
+          alt="categoryImage"
+        />
+        </a>
+        <div class="card-body">
+          <h5 class="card-title">{{ category.name|slice:":15" }}..</h5>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock content %}

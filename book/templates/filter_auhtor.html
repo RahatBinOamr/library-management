@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+{% if books %}
+<div style="background-color: #fff" class="shadow-sm p-3 mt-4 rounded">
+  <h2>Author</h2>
+  <div class="row row-cols-1 row-cols-md-4  g-2 mt-3">
+    {% for book in books %}
+
+    <div class="col">
+      <div class="card h-100">
+        <a href="{% url 'book_detail' book.slug %}">
+          <img
+            src="{{ book.cover.url }}"
+            class="card-img-top"
+            alt="book"
+            style="height: 150px"
+          />
+        </a>
+        <div class="card-body">
+          <a style="color: black" href="{% url 'book_detail' book.slug %}">
+            <h5 class="card-title">{{ book.title }}</h5>
+          </a>
+          <p class="card-text">{{ book.description|slice:":100"|safe }}..</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+<div>
+  <h3 class="text-danger">This author has no  books available </h3>
+  <a href="{% url 'home'  %}">
+    <button class="btn btn-primary">back to home</button>
+  </a>
+</div>
+{% endif %}
+
+{% endblock content %}

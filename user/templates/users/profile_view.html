@@ -1,0 +1,136 @@
+{% extends "base.html" %} {% block title %}Profile Page{% endblock title %} 
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-4">
+      <img
+        class="rounded account-img"
+        style="height: 300px; width: 300px"
+        src="{{ user.profile.avatar.url }} "
+        style="cursor: pointer"
+      />
+    </div>
+    <div class="col-md-8">
+      <h1>{{ request.user.username }}</h1>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
+        consectetur dolor sed lectus molestie, id tincidunt lectus semper. Proin
+        euismod ante vel felis commodo, et fringilla lacus eleifend.
+      </p>
+      <p>Email: {{ request.user.email }}</p>
+      <p>Location: {{ request.user.profile.bio}}</p>
+      <a href="{% url 'users-profile' %}">
+        <button class="btn btn-info">update profile</button>
+      </a>
+    </div>
+  </div>
+</div>
+
+{% if borrowings %}
+<div class="container mt-5">
+  <h2>Borrowing Collection</h2>
+  <hr />
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>image</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for b in borrowings %}
+        <tr>
+          <td>
+            <img
+              src="{{ b.book.cover.url }}"
+              alt=""
+              style="height: 50px; width: 50px"
+            />
+          </td>
+          <td>{{ b.book.title }}</td>
+          <td>{{ b.book.description|slice:":100"|safe }}..</td>
+          <td>
+            <a href="{% url 'remove_borrowing' b.pk %}">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-trash-fill text-danger"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"
+                />
+              </svg>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+{% if wishlists %}
+<div class="container mt-5 my-5">
+  <h2>Wishlist Collection</h2>
+  <hr />
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>image</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for b in wishlists %}
+        <tr>
+          <td>
+            <img
+              src="{{ b.book.cover.url }}"
+              alt=""
+              style="height: 50px; width: 50px"
+            />
+          </td>
+          <td>
+            <a style="color:black" href="{% url 'book_detail' b.book.slug %}">
+              {{ b.book.title }}
+            </a>
+          </td>
+          <td>
+            <a style="color:black" href="{% url 'book_detail' b.book.slug %}">
+              {{ b.book.description|slice:":100"|safe }}..
+            </a>
+          </td>
+
+          <td>
+            <a href="{% url 'remove_wishlist' b.pk %}">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-trash-fill text-danger"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"
+                />
+              </svg>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
