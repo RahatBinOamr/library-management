@@ -2,18 +2,18 @@
 {% block content %}
 
 <section class="container mt-4">
-  <div class="d-flex justify-content-evenly g-5">
-    <div>
+  <div class="row">
+    <div class="col-md-4">
       <img
         src="{{ book.cover.url }}"
         style="height: 300px; width: 300px; border-radius: 10px"
         alt=""
       />
     </div>
-    <div>
+    <div class="col-md-8">
       <h4>{{ book.title }}</h4>
 
-      <div class="d-flex align-content-center mb-3 mt-3">
+      <div class="d-flex align-items-center mb-3 mt-3">
         <img
           src="{{ book.author.image.url }}"
           style="height: 70px; width: 70px; border-radius: 100%"
@@ -25,15 +25,22 @@
       </div>
 
       <div class="d-flex">
+        {% if book.num_of_books_available == 0 %}
+        <button class="btn btn-info me-2 disabled">Add Wishlist</button>
+        <button class="btn btn-warning disabled">Borrowing Book</button>
+
+        {% else %}
         <a href="{% url 'add_wishlist' book.pk %}">
-        <button class="btn btn-info me-2">Add Wishlist</button>
+          <button class="btn btn-info me-2">Add Wishlist</button>
         </a>
         <a href="{% url 'add_borrowing' book.pk %}">
-        <button class="btn btn-warning">Borrowing Book</button>
+          <button class="btn btn-warning">Borrowing Book</button>
         </a>
+        {% endif %}
       </div>
     </div>
   </div>
+
   <div class="mt-5">
     <h2>{{ book.title }}</h2>
     <p>{{ book.description |safe}}</p>
@@ -44,7 +51,6 @@
   <div style="background-color: #fff" class="shadow-sm p-3 mt-4 rounded">
     <div class="d-flex justify-content-between">
       <h3>Relatd books</h3>
-     
     </div>
 
     <div class="row row-cols-1 row-cols-md-4 g-4 mt-3">
@@ -72,6 +78,4 @@
     </div>
   </div>
 </section>
-{% include "footer.html" %}
-
-{% endblock %}
+{% include "footer.html" %} {% endblock %}

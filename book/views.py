@@ -3,6 +3,7 @@ from django.shortcuts import render,get_object_or_404
 from django.db.models import Q
 from .models import Book,Category,Author,Wishlist,Borrowing
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def HomePage(request):
@@ -84,7 +85,7 @@ def AuthorFilter(request,author_name):
     }
     return render(request, 'filter_auhtor.html', context)
 
-
+@login_required(login_url='login')
 def add_wishlist(request, pk=None):
     if request.user.is_authenticated:
         book = get_object_or_404(Book, pk=pk)
@@ -97,7 +98,7 @@ def remove_wishlist(request, pk=None):
     data.delete() 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER') )
 
-
+@login_required(login_url='login')
 def add_borrowing(request, pk=None):
     if request.user.is_authenticated:
         book = get_object_or_404(Book, pk=pk)
@@ -109,10 +110,10 @@ def add_borrowing(request, pk=None):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER') )
 
 def remove_borrowing(request, pk=None):
+    # book = get_object_or_404(Book, pk=pk)
+    # book.num_of_books_available += 1
+    # book.save()
     data = get_object_or_404(Borrowing, pk=pk)
-    book = get_object_or_404(Book, pk=pk)
-    book.num_of_books_available += 1
-    book.save()
     data.delete() 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER') )
 
