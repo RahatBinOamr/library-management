@@ -110,10 +110,9 @@ def add_borrowing(request, pk=None):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER') )
 
 def remove_borrowing(request, pk=None):
-    # book = get_object_or_404(Book, pk=pk)
-    # book.num_of_books_available += 1
-    # book.save()
     data = get_object_or_404(Borrowing, pk=pk)
+    data.book.num_of_books_available += 1
+    data.save()
     data.delete() 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER') )
 
