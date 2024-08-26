@@ -46,6 +46,8 @@
     <p>{{ book.description |safe}}</p>
   </div>
 </section>
+{% if related_books %}
+
 
 <section class="container">
   <div style="background-color: #fff" class="shadow-sm p-3 mt-4 rounded">
@@ -78,4 +80,5 @@
     </div>
   </div>
 </section>
+{% endif %}
 {% include "footer.html" %} {% endblock %}
